@@ -15,15 +15,10 @@ public class HelpdeskUITest {
 
     @Before
     public void setup() throws IOException {
-        // Читаем конфигурационный файл в System.properties
         System.getProperties().load(ClassLoader.getSystemResourceAsStream("config.properties"));
-        // Создание экземпляра драйвера
         driver = new ChromeDriver();
-        // Устанавливаем размер окна браузера, как максимально возможный
         driver.manage().window().maximize();
-        // Установим время ожидания для поиска элементов
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-        // Установить созданный драйвер для поиска в веб-страницах
         AbstractPage.setDriver(driver);
     }
 
