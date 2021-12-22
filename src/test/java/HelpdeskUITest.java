@@ -29,15 +29,13 @@ public class HelpdeskUITest {
     @Test
     public void createTicketTest() throws IOException {
         driver.get(System.getProperty("site.url"));
-        driver.findElement(By.xpath("//li[@class=\"nav-item\"][1]")).click();
+        driver.findElement(By.xpath("//*[@class=\"fas fa-fw fa-plus-circle\"]")).click();
         driver.findElement(By.xpath("//*[@id=\"id_queue\"]")).click();
         driver.findElement(By.xpath("//*[@id=\"id_queue\"]/option[3]")).click();
         driver.findElement(By.xpath("//*[@id=\"id_title\"]")).sendKeys(nameTicket);
         driver.findElement(By.xpath("//*[@id=\"id_body\"]")).sendKeys("Домашка по Selenium");
         driver.findElement(By.xpath("//*[@id=\"id_priority\"]")).click();
-        driver.findElement(By.xpath("//*[@id=\"id_priority\"]/option[1]")).click();
-        driver.findElement(By.xpath("//*[@id=\"id_due_date\"]")).click();
-        driver.findElement(By.xpath("//*[@id=\"ui-datepicker-div\"]/table/tbody/tr[4]/td[1]/a")).click();
+        driver.findElement(By.xpath("//*[text()=\"1. Critical\"]")).click();
         driver.findElement(By.xpath("//*[@id=\"id_submitter_email\"]")).sendKeys("maschkovc@yandex.ru");
         driver.findElement(By.xpath("//button[@type]")).click();
         driver.findElement(By.xpath("//*[@id=\"userDropdown\"]")).click();
@@ -60,7 +58,7 @@ public class HelpdeskUITest {
         driver.findElement(By.xpath("//*[@id=\"searchform\"]/div/div/button")).click();
         driver.findElement(By.xpath("//*[@class=\"tickettitle\"]/a")).click();
 
-        String text = driver.findElement(By.xpath("//*[@class=\"list-group-item list-group-item-action\"]/p[3]")).getText();
+        String text = driver.findElement(By.xpath("//*[text()=\"Домашка по Selenium\"]")).getText();
         if (text.equals("Домашка по Selenium")) {
             System.out.println("Данные соответствуют введенным");
         } else {
