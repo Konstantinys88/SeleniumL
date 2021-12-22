@@ -61,7 +61,6 @@ public class HelpdeskUITest {
         driver.findElement(By.xpath("//*[@class=\"tickettitle\"]/a")).click();
 
         String text = driver.findElement(By.xpath("//*[@class=\"list-group-item list-group-item-action\"]/p[3]")).getText();
-       // String text = driver.findElement(By.xpath("//*[@id=\"content-wrapper\"]/div/div[2]/div[2]/div/div/p[3]")).getText();
         if (text.equals("Домашка по Selenium")) {
             System.out.println("Данные соответствуют введенным");
         } else {
