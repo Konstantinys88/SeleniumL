@@ -27,7 +27,7 @@ public class HelpdeskUITest {
      * Метод для создания Ticket
      */
     @Test
-    public void createTicketTest() throws IOException {
+    public void createTicketTest(){
         driver.get(System.getProperty("site.url"));
         driver.findElement(By.xpath("//*[@class=\"fas fa-fw fa-plus-circle\"]")).click();
         driver.findElement(By.xpath("//*[@id=\"id_queue\"]")).click();
