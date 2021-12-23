@@ -27,7 +27,7 @@ public class HelpdeskUITest {
      * Метод для создания Ticket
      */
     @Test
-    public void createTicketTest(){
+    public void createTicketTest() {
         driver.get(System.getProperty("site.url"));
         driver.findElement(By.xpath("//*[@class=\"fas fa-fw fa-plus-circle\"]")).click();
         driver.findElement(By.xpath("//*[@id=\"id_queue\"]")).click();
@@ -57,7 +57,7 @@ public class HelpdeskUITest {
 
         driver.findElement(By.xpath("//*[@id=\"search_query\"]")).sendKeys(nameTicket);
         driver.findElement(By.xpath("//*[@id=\"searchform\"]/div/div/button")).click();
-        driver.findElement(By.xpath("//*[@class=\"tickettitle\"]/a")).click();
+        driver.findElement(By.xpath("//*[@href = \"/tickets/1985/\"]")).click();
 
         String text = driver.findElement(By.xpath("//*[text()=\"Домашка по Selenium\"]")).getText();
         if (text.equals("Домашка по Selenium")) {
@@ -66,7 +66,7 @@ public class HelpdeskUITest {
             System.out.println("Данные не соответствуют");
         }
 
-           driver.close();
+        driver.close();
 
     }
 
