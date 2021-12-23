@@ -36,6 +36,7 @@ public class HelpdeskUITest {
         driver.findElement(By.xpath("//*[@id=\"id_body\"]")).sendKeys("Домашка по Selenium");
         driver.findElement(By.xpath("//*[@id=\"id_priority\"]")).click();
         driver.findElement(By.xpath("//*[text()=\"1. Critical\"]")).click();
+        driver.findElement(By.xpath("//*[@id=\"id_due_date\"]")).sendKeys("1989-12-11");
         driver.findElement(By.xpath("//*[@id=\"id_submitter_email\"]")).sendKeys("maschkovc@yandex.ru");
         driver.findElement(By.xpath("//button[@type]")).click();
         driver.findElement(By.xpath("//*[@id=\"userDropdown\"]")).click();
@@ -65,7 +66,7 @@ public class HelpdeskUITest {
             System.out.println("Данные не соответствуют");
         }
 
-        driver.close();
+           driver.close();
 
     }
 
