@@ -27,7 +27,7 @@ public class HelpdeskUITest {
      * Метод для создания Ticket
      */
     @Test
-    public void createTicketTest() {
+    public void createTicketTest() throws IOException {
         driver.get(System.getProperty("site.url"));
         driver.findElement(By.xpath("//*[@class=\"fas fa-fw fa-plus-circle\"]")).click();
         driver.findElement(By.xpath("//*[@id=\"id_queue\"]")).click();
@@ -41,15 +41,6 @@ public class HelpdeskUITest {
         driver.findElement(By.xpath("//button[@type]")).click();
         driver.findElement(By.xpath("//*[@id=\"userDropdown\"]")).click();
 
-        driver.close();
-    }
-
-    /**
-     * Метод для проверки Ticket
-     */
-    @Test
-    public void checkTicket() throws IOException {
-        driver.get("https://at-sandbox.workbench.lanit.ru/login/?next=/");
         LoginPage loginPage = new LoginPage();
         System.getProperties().load(ClassLoader.getSystemResourceAsStream("user.properties"));
         loginPage.login(System.getProperty("user"), System.getProperty("password"));
@@ -67,7 +58,6 @@ public class HelpdeskUITest {
         }
 
         driver.close();
-
     }
 
 }
