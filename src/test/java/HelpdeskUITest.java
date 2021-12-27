@@ -63,5 +63,3 @@ public class HelpdeskUITest {
     }
 
 }
-//allure serve target/allure-results
-//mvn clean test
