@@ -1,9 +1,9 @@
 
-import org.junit.Before;
-import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Test;
 import pages.AbstractPage;
 import pages.LoginPage;
 import java.io.IOException;
@@ -15,7 +15,7 @@ public class HelpdeskUITest {
     private WebDriver driver;
     String nameTicket = "Уникальный билет 345";
 
-    @Before
+    @BeforeClass
     public void setup() throws IOException {
         System.getProperties().load(ClassLoader.getSystemResourceAsStream("config.properties"));
         driver = new ChromeDriver();
@@ -27,6 +27,7 @@ public class HelpdeskUITest {
     /**
      * Метод для создания Ticket
      */
+
     @Test
     public void createTicketTest() throws IOException {
         driver.get(System.getProperty("site.url"));
@@ -62,3 +63,5 @@ public class HelpdeskUITest {
     }
 
 }
+//allure serve target/allure-results
+//mvn clean test
