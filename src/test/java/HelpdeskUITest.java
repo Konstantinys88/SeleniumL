@@ -1,11 +1,17 @@
-
+import io.qameta.allure.Attachment;
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.ITestResult;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.AbstractPage;
 import pages.LoginPage;
+
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
@@ -15,6 +21,7 @@ public class HelpdeskUITest {
     private WebDriver driver;
     String nameTicket = "Уникальный билет 345";
 
+
     @BeforeClass
     public void setup() throws IOException {
         System.getProperties().load(ClassLoader.getSystemResourceAsStream("config.properties"));
@@ -22,13 +29,14 @@ public class HelpdeskUITest {
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         AbstractPage.setDriver(driver);
+
     }
 
     /**
      * Метод для создания Ticket
      */
 
-    @Test
+    @Step("Метод для создания Ticket")
     public void createTicketTest() throws IOException {
         driver.get(System.getProperty("site.url"));
         driver.findElement(By.xpath("//*[@class=\"fas fa-fw fa-plus-circle\"]")).click();
@@ -60,6 +68,21 @@ public class HelpdeskUITest {
         }
 
         driver.close();
+    }
+
+    @Attachment(value = "Page screenshot", type = "image/png")
+    public byte[] saveScreenshot(WebDriver driver) {
+        return ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
+    }
+
+    @Test
+    public void test() throws IOException {
+        try {
+            createTicketTest();
+        } catch (Exception e){
+            saveScreenshot(driver);
+        }
+
     }
 
 }

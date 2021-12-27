@@ -41,6 +41,12 @@
             <artifactId>ashot</artifactId>
             <version>1.5.4</version>
         </dependency>
+        <dependency>
+            <groupId>org.junit.platform</groupId>
+            <artifactId>junit-platform-engine</artifactId>
+            <version>1.0.0</version>
+            <scope>test</scope>
+        </dependency>
 
 
     </dependencies>
