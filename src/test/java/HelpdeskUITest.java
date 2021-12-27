@@ -52,7 +52,7 @@ public class HelpdeskUITest {
         LoginPage loginPage = new LoginPage();
         System.getProperties().load(ClassLoader.getSystemResourceAsStream("user.properties"));
         loginPage.login(System.getProperty("user"), System.getProperty("password"));
-        loginPage.clickLoginBtn();
+        //loginPage.clickLoginBtn();
 
         driver.findElement(By.xpath("//*[@id=\"search_query\"]")).sendKeys(nameTicket);
         driver.findElement(By.xpath("//*[@id=\"searchform\"]/div/div/button")).click();
@@ -74,7 +74,7 @@ public class HelpdeskUITest {
     }
 
     @Test
-    public void test() throws IOException {
+    public void test() {
         try {
             createTicketTest();
         } catch (Exception e){
