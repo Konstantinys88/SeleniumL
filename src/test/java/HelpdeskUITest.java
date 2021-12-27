@@ -1,25 +1,25 @@
-import org.junit.Before;
-import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Test;
 import pages.AbstractPage;
 import pages.LoginPage;
 
 import java.io.IOException;
-import java.util.concurrent.TimeUnit;
+import java.time.Duration;
 
 public class HelpdeskUITest {
 
     private WebDriver driver;
     String nameTicket = "Уникальный билет 345";
 
-    @Before
+    @BeforeClass
     public void setup() throws IOException {
         System.getProperties().load(ClassLoader.getSystemResourceAsStream("config.properties"));
         driver = new ChromeDriver();
         driver.manage().window().maximize();
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         AbstractPage.setDriver(driver);
     }
 
