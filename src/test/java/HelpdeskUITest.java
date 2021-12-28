@@ -65,8 +65,12 @@ public class HelpdeskUITest {
             System.out.println("Данные не соответствуют");
         }
 
+        saveScreenshot(driver);
+
         driver.close();
     }
+
+
 
     @Attachment(value = "Page screenshot", type = "image/png")
     public byte[] saveScreenshot(WebDriver driver) {
@@ -74,13 +78,8 @@ public class HelpdeskUITest {
     }
 
     @Test
-    public void test() {
-        try {
+    public void test() throws IOException {
             createTicketTest();
-        } catch (Exception e){
-            saveScreenshot(driver);
-        }
-
     }
 
 }
