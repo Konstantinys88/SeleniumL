@@ -1,18 +1,25 @@
 import org.junit.Before;
 import org.junit.Test;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.PageFactory;
 import pages.AbstractPage;
 import pages.LoginPage;
+import pages.MainPage;
+import pages.TicketsPage;
 
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 public class HelpdeskUITest {
 
+    private final String SUMMARY = "Проблема глобального потепления";
+    private final String DESCRIPTION = "Description of your issue";
+    private final String DUE_ON = "2021-10-05 00:00:00";
+    private final String EMAIL = "qwerty@emailo.at";
+
+
     private WebDriver driver;
-    String nameTicket = "Уникальный билет 345";
 
     @Before
     public void setup() throws IOException {
@@ -24,34 +31,56 @@ public class HelpdeskUITest {
     }
 
     /**
-     * Метод для создания Ticket
+     * Метод для создания и проверки Ticket.
      */
+
     @Test
     public void createTicketTest() throws IOException {
+
         driver.get(System.getProperty("site.url"));
-        driver.findElement(By.xpath("//*[@class=\"fas fa-fw fa-plus-circle\"]")).click();
-        driver.findElement(By.xpath("//*[@id=\"id_queue\"]")).click();
-        driver.findElement(By.xpath("//*[@id=\"id_queue\"]/option[3]")).click();
-        driver.findElement(By.xpath("//*[@id=\"id_title\"]")).sendKeys(nameTicket);
-        driver.findElement(By.xpath("//*[@id=\"id_body\"]")).sendKeys("Домашка по Selenium");
-        driver.findElement(By.xpath("//*[@id=\"id_priority\"]")).click();
-        driver.findElement(By.xpath("//*[text()=\"1. Critical\"]")).click();
-        driver.findElement(By.xpath("//*[@id=\"id_due_date\"]")).sendKeys("1989-12-11");
-        driver.findElement(By.xpath("//*[@id=\"id_submitter_email\"]")).sendKeys("maschkovc@yandex.ru");
-        driver.findElement(By.xpath("//button[@type]")).click();
-        driver.findElement(By.xpath("//*[@id=\"userDropdown\"]")).click();
-
-        LoginPage loginPage = new LoginPage();
         System.getProperties().load(ClassLoader.getSystemResourceAsStream("user.properties"));
+
+        /**
+         * Создаем Ticket
+         */
+
+        TicketsPage ticketsPage = PageFactory.initElements(driver, TicketsPage.class);
+        ticketsPage.clickNewTicket();
+        ticketsPage.clickQueue();
+        ticketsPage.chooseDjangoHelpdesk();
+        ticketsPage.sendKeysSummaryOfTheProblem(SUMMARY);
+        ticketsPage.sendKeysDescriptionOfYourIssue(DESCRIPTION);
+        ticketsPage.clickPriority();
+        ticketsPage.clickPriorityCritical();
+        ticketsPage.sendKeyDueOn(DUE_ON);
+        ticketsPage.sendKeyYourEmailAddress(EMAIL);
+        ticketsPage.clickSubmitTicket();
+
+        /**
+         * Логинимся
+         */
+
+        LoginPage loginPage = PageFactory.initElements(driver, LoginPage.class);
+        loginPage.clickLogInBtn();
         loginPage.login(System.getProperty("user"), System.getProperty("password"));
-        loginPage.clickLoginBtn();
+        loginPage.clickLogin();
 
-        driver.findElement(By.xpath("//*[@id=\"search_query\"]")).sendKeys(nameTicket);
-        driver.findElement(By.xpath("//*[@id=\"searchform\"]/div/div/button")).click();
-        driver.findElement(By.xpath("//*[@href = \"/tickets/1985/\"]")).click();
+        /**
+         * Поиск Ticket
+         */
 
-        String text = driver.findElement(By.xpath("//*[text()=\"Домашка по Selenium\"]")).getText();
-        if (text.equals("Домашка по Selenium")) {
+        MainPage mainPage = PageFactory.initElements(driver, MainPage.class);
+        mainPage.sendKeySearch(SUMMARY);
+        mainPage.clickGo();
+        mainPage.goMyTicket();
+
+        /**
+         * Проверка Ticket
+         */
+
+        String textTicket = mainPage.checkTicket();
+
+        if (textTicket.equals(DESCRIPTION)) {
             System.out.println("Данные соответствуют введенным");
         } else {
             System.out.println("Данные не соответствуют");
@@ -59,5 +88,5 @@ public class HelpdeskUITest {
 
         driver.close();
     }
-
 }
+

@@ -1,15 +1,23 @@
 package pages;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 
 public class LoginPage extends AbstractPage {
 
-    private WebElement user = driver.findElement(By.xpath("//*[@id=\"username\"]"));
 
-    private WebElement password = driver.findElement(By.xpath("//*[@id=\"password\"]"));
+    @FindBy(xpath = "//*[@id=\"username\"]")
+    private WebElement user;
 
-    private WebElement loginBtn = driver.findElement(By.xpath("//*[@id=\"content-wrapper\"]/div/div/div/div[2]/form/input[1]"));
+    @FindBy(xpath = "//*[@id=\"password\"]")
+    private WebElement password;
+
+    @FindBy(xpath = "//*[@id=\"userDropdown\"]")
+    private WebElement logInBtn;
+
+    public void clickLogInBtn() {
+        logInBtn.click();
+    }
 
     public void login(String users, String passwords) {
         user.sendKeys(users);
@@ -17,8 +25,11 @@ public class LoginPage extends AbstractPage {
 
     }
 
-    public void clickLoginBtn() {
-        loginBtn.click();
+    @FindBy(xpath = "//*[@class=\"btn btn-lg btn-primary btn-block\"]")
+    private WebElement login;
+
+    public void clickLogin(){
+        login.click();
     }
 
 }
