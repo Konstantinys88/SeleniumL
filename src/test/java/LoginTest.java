@@ -1,3 +1,4 @@
+import io.qameta.allure.Attachment;
 import io.qameta.allure.Step;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.OutputType;
@@ -12,17 +13,27 @@ import pages.LoginPage;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.concurrent.TimeUnit;
 
-/**
- * Чтобы запустить сборку введите - mvn clean test
- * Чтобы сгенерировать отчет - allure serve target/allure-results
- */
+    /**
+    * Чтобы запустить сборку введите - mvn clean test
+    * Чтобы сгенерировать отчет - allure serve target/allure-results
+    */
 
 public class LoginTest {
 
     private WebDriver driver;
 
+    /**
+     * Метод для прикрепления скриншота к Allure
+     */
+
+    @Attachment
+    public static byte[] getBytes(String resourceName) throws IOException {
+        return Files.readAllBytes(Paths.get("src/main/screenshot", resourceName));
+    }
 
     @BeforeClass
     public void setup() throws IOException {
@@ -42,12 +53,13 @@ public class LoginTest {
         loginPage.login(System.getProperty("user"), System.getProperty("password"));
         loginPage.clickLogin();
 
-/**
- * Делает скриншот
- */
-
+        /**
+        * Делает скриншот
+        */
         File screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
         FileUtils.copyFile(screenshot, new File("src/main/screenshot/screenLogin.png"));
+
+        getBytes("screenLogin.png");
 
         driver.close();
 

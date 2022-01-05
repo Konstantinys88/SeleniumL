@@ -1,3 +1,4 @@
+import io.qameta.allure.Attachment;
 import io.qameta.allure.Step;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.OutputType;
@@ -12,19 +13,17 @@ import pages.TicketsPage;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.concurrent.TimeUnit;
 
-/**
- * Данный тест создает новый Ticket
- *
- * Чтобы запустить сборку введите - mvn clean test
- *
- * Чтобы сгенерировать отчет - allure serve target/allure-results
- *
- */
+    /**
+    * Данный тест создает новый Ticket
+    * Чтобы запустить сборку введите - mvn clean test
+    * Чтобы сгенерировать отчет - allure serve target/allure-results
+    */
 
 public class HelpdeskUITest extends AbstractPage {
-
 
     private final String SUMMARY = "Проблема глобального потепления";
     private final String DESCRIPTION = "Description of your issue";
@@ -33,6 +32,14 @@ public class HelpdeskUITest extends AbstractPage {
 
     private WebDriver driver;
 
+    /**
+     * Метод для прикрепления скриншота к Allure
+     */
+
+    @Attachment
+    public static byte[] getBytes(String resourceName) throws IOException {
+        return Files.readAllBytes(Paths.get("src/main/screenshot", resourceName));
+    }
 
     @BeforeClass
     public void setup() throws IOException {
@@ -58,11 +65,14 @@ public class HelpdeskUITest extends AbstractPage {
         ticketsPage.sendKeyYourEmailAddress(EMAIL);
         ticketsPage.clickSubmitTicket();
 
-        /**
-         * Делает скриншот
-         */
+    /**
+    * Делает скриншот
+    */
+
         File screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
         FileUtils.copyFile(screenshot, new File("src/main/screenshot/screenCreateTicket.png"));
+
+        getBytes("screenCreateTicket.png");
 
         driver.close();
     }

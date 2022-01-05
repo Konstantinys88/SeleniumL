@@ -1,3 +1,4 @@
+import io.qameta.allure.Attachment;
 import io.qameta.allure.Step;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.OutputType;
@@ -13,12 +14,14 @@ import pages.MainPage;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.concurrent.TimeUnit;
 
-/**
- * Чтобы запустить сборку введите - mvn clean test
- * Чтобы сгенерировать отчет - allure serve target/allure-results
- */
+    /**
+    * Чтобы запустить сборку введите - mvn clean test
+    * Чтобы сгенерировать отчет - allure serve target/allure-results
+    */
 
 public class CheckTicketTest {
 
@@ -26,6 +29,15 @@ public class CheckTicketTest {
 
     private final String SUMMARY = "Проблема глобального потепления";
     private final String DESCRIPTION = "Description of your issue";
+
+    /**
+     * Метод для прикрепления скриншота к Allure
+     */
+
+    @Attachment
+    public static byte[] getBytes(String resourceName) throws IOException {
+        return Files.readAllBytes(Paths.get("src/main/screenshot", resourceName));
+    }
 
     @BeforeClass
     public void setup() throws IOException {
@@ -59,12 +71,13 @@ public class CheckTicketTest {
             System.out.println("Данные не соответствуют");
         }
 
-/**
-* Делает скриншот
-*/
-
+    /**
+    * Делает скриншот
+    */
         File screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
         FileUtils.copyFile(screenshot, new File("src/main/screenshot/screeCheckTicket.png"));
+
+        getBytes("screeCheckTicket.png");
 
         driver.close();
 
