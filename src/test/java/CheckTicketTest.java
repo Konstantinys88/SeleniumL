@@ -7,7 +7,6 @@ import org.testng.annotations.Test;
 import pages.AbstractPage;
 import pages.LoginPage;
 import pages.MainPage;
-import pages.TicketsPage;
 
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
@@ -17,16 +16,12 @@ import java.util.concurrent.TimeUnit;
  * Чтобы сгенерировать отчет - allure serve target/allure-results
  */
 
-public class HelpdeskUITest extends AbstractPage {
-
-
-    private final String SUMMARY = "Проблема глобального потепления";
-    private final String DESCRIPTION = "Description of your issue";
-    private final String DUE_ON = "2021-10-05 00:00:00";
-    private final String EMAIL = "qwerty@emailo.at";
+public class CheckTicketTest {
 
     private WebDriver driver;
 
+    private final String SUMMARY = "Проблема глобального потепления";
+    private final String DESCRIPTION = "Description of your issue";
 
     @BeforeClass
     public void setup() throws IOException {
@@ -36,24 +31,6 @@ public class HelpdeskUITest extends AbstractPage {
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         AbstractPage.setDriver(driver);
     }
-
-    @Step
-    public void createTicketTest() throws IOException {
-        driver.get(System.getProperty("site.url"));
-        TicketsPage ticketsPage = PageFactory.initElements(driver, TicketsPage.class);
-        ticketsPage.clickNewTicket();
-        ticketsPage.clickQueue();
-        ticketsPage.chooseDjangoHelpdesk();
-        ticketsPage.sendKeysSummaryOfTheProblem(SUMMARY);
-        ticketsPage.sendKeysDescriptionOfYourIssue(DESCRIPTION);
-        ticketsPage.clickPriority();
-        ticketsPage.clickPriorityCritical();
-        ticketsPage.sendKeyDueOn(DUE_ON);
-        ticketsPage.sendKeyYourEmailAddress(EMAIL);
-        ticketsPage.clickSubmitTicket();
-        driver.close();
-    }
-
 
     @Step
     public void checkTicket() throws IOException {
@@ -82,19 +59,10 @@ public class HelpdeskUITest extends AbstractPage {
 
     }
 
-
     @Test
-    public void uiTestCreateTicket() throws IOException {
-        createTicketTest();
-
+    public void uiTestCheckTicket() throws IOException {
+        checkTicket();
     }
 
 
-//    @Test
-//    public void uiTestCheckTicket() throws IOException {
-//        checkTicket();
-//    }
-
-
 }
-
