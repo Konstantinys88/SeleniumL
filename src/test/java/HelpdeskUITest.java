@@ -5,16 +5,17 @@ import org.openqa.selenium.support.PageFactory;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import pages.AbstractPage;
-import pages.LoginPage;
-import pages.MainPage;
 import pages.TicketsPage;
 
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 /**
+ * Данный тест создает новый Ticket
+ *
  * Чтобы запустить сборку введите - mvn clean test
  * Чтобы сгенерировать отчет - allure serve target/allure-results
+ *
  */
 
 public class HelpdeskUITest extends AbstractPage {
@@ -54,47 +55,11 @@ public class HelpdeskUITest extends AbstractPage {
         driver.close();
     }
 
-
-    @Step
-    public void checkTicket() throws IOException {
-
-        driver.get("https://at-sandbox.workbench.lanit.ru/login/?next=/");
-        System.getProperties().load(ClassLoader.getSystemResourceAsStream("user.properties"));
-        LoginPage loginPage = PageFactory.initElements(driver, LoginPage.class);
-        loginPage.clickLogInBtn();
-        loginPage.login(System.getProperty("user"), System.getProperty("password"));
-        loginPage.clickLogin();
-
-        MainPage mainPage = PageFactory.initElements(driver, MainPage.class);
-        mainPage.sendKeySearch(SUMMARY);
-        mainPage.clickGo();
-        mainPage.goMyTicket();
-
-        String textTicket = mainPage.checkTicket();
-
-        if (textTicket.equals(DESCRIPTION)) {
-            System.out.println("Данные соответствуют введенным");
-        } else {
-            System.out.println("Данные не соответствуют");
-        }
-
-        driver.close();
-
-    }
-
-
     @Test
     public void uiTestCreateTicket() throws IOException {
         createTicketTest();
 
     }
-
-
-//    @Test
-//    public void uiTestCheckTicket() throws IOException {
-//        checkTicket();
-//    }
-
 
 }
 
