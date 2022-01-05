@@ -62,8 +62,7 @@ public class HelpdeskUITest extends AbstractPage {
          * Делает скриншот
          */
         File screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-        FileUtils.copyFile(screenshot, new File("D:\\Java2\\SeleniumL\\" +
-                "build\\reports\\tests\\screenCreateTicket.png"));
+        FileUtils.copyFile(screenshot, new File("src/main/screenshot/screenCreateTicket.png"));
 
         driver.close();
     }

@@ -64,8 +64,7 @@ public class CheckTicketTest {
 */
 
         File screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-        FileUtils.copyFile(screenshot, new File("D:\\Java2\\SeleniumL\\" +
-                "build\\reports\\tests\\screeCheckTicket.png"));
+        FileUtils.copyFile(screenshot, new File("src/main/screenshot/screeCheckTicket.png"));
 
         driver.close();
 
