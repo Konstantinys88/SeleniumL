@@ -45,6 +45,7 @@ public class LoginTest {
 /**
  * Делает скриншот
  */
+
         File screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
         FileUtils.copyFile(screenshot, new File("D:\\Java2\\SeleniumL\\" +
                 "build\\reports\\tests\\screenLogin.png"));

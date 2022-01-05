@@ -59,9 +59,10 @@ public class CheckTicketTest {
             System.out.println("Данные не соответствуют");
         }
 
-        /**
-         * Делает скриншот
-         */
+/**
+* Делает скриншот
+*/
+
         File screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
         FileUtils.copyFile(screenshot, new File("D:\\Java2\\SeleniumL\\" +
                 "build\\reports\\tests\\screeCheckTicket.png"));
