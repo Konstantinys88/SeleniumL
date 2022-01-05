@@ -1,4 +1,7 @@
 import io.qameta.allure.Step;
+import org.apache.commons.io.FileUtils;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.PageFactory;
@@ -7,6 +10,7 @@ import org.testng.annotations.Test;
 import pages.AbstractPage;
 import pages.TicketsPage;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
@@ -14,6 +18,7 @@ import java.util.concurrent.TimeUnit;
  * Данный тест создает новый Ticket
  *
  * Чтобы запустить сборку введите - mvn clean test
+ *
  * Чтобы сгенерировать отчет - allure serve target/allure-results
  *
  */
@@ -38,7 +43,7 @@ public class HelpdeskUITest extends AbstractPage {
         AbstractPage.setDriver(driver);
     }
 
-    @Step
+    @Step("Проверка создания нового Ticket")
     public void createTicketTest() throws IOException {
         driver.get(System.getProperty("site.url"));
         TicketsPage ticketsPage = PageFactory.initElements(driver, TicketsPage.class);
@@ -52,6 +57,14 @@ public class HelpdeskUITest extends AbstractPage {
         ticketsPage.sendKeyDueOn(DUE_ON);
         ticketsPage.sendKeyYourEmailAddress(EMAIL);
         ticketsPage.clickSubmitTicket();
+
+        /**
+         * Делает скриншот
+         */
+        File screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+        FileUtils.copyFile(screenshot, new File("D:\\Java2\\SeleniumL\\" +
+                "build\\reports\\tests\\screenCreateTicket.png"));
+
         driver.close();
     }
 

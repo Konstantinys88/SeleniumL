@@ -1,4 +1,7 @@
 import io.qameta.allure.Step;
+import org.apache.commons.io.FileUtils;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.PageFactory;
@@ -7,6 +10,7 @@ import org.testng.annotations.Test;
 import pages.AbstractPage;
 import pages.LoginPage;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
@@ -29,7 +33,7 @@ public class LoginTest {
         AbstractPage.setDriver(driver);
     }
 
-    @Step
+    @Step("Проверка логин и пароль")
     public void login() throws IOException {
         driver.get("https://at-sandbox.workbench.lanit.ru/login/?next=/");
         System.getProperties().load(ClassLoader.getSystemResourceAsStream("user.properties"));
@@ -37,7 +41,16 @@ public class LoginTest {
         loginPage.clickLogInBtn();
         loginPage.login(System.getProperty("user"), System.getProperty("password"));
         loginPage.clickLogin();
+
+/**
+ * Делает скриншот
+ */
+        File screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+        FileUtils.copyFile(screenshot, new File("D:\\Java2\\SeleniumL\\" +
+                "build\\reports\\tests\\screenLogin.png"));
+
         driver.close();
+
     }
 
     @Test

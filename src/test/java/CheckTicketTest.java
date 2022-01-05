@@ -1,4 +1,7 @@
 import io.qameta.allure.Step;
+import org.apache.commons.io.FileUtils;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.PageFactory;
@@ -8,6 +11,7 @@ import pages.AbstractPage;
 import pages.LoginPage;
 import pages.MainPage;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
@@ -32,7 +36,7 @@ public class CheckTicketTest {
         AbstractPage.setDriver(driver);
     }
 
-    @Step
+    @Step("Поиск созданного Ticket")
     public void checkTicket() throws IOException {
 
         driver.get("https://at-sandbox.workbench.lanit.ru/login/?next=/");
@@ -54,6 +58,13 @@ public class CheckTicketTest {
         } else {
             System.out.println("Данные не соответствуют");
         }
+
+        /**
+         * Делает скриншот
+         */
+        File screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+        FileUtils.copyFile(screenshot, new File("D:\\Java2\\SeleniumL\\" +
+                "build\\reports\\tests\\screeCheckTicket.png"));
 
         driver.close();
 
