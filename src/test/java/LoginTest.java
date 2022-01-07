@@ -1,8 +1,6 @@
 import io.qameta.allure.Attachment;
+import io.qameta.allure.Description;
 import io.qameta.allure.Step;
-import org.apache.commons.io.FileUtils;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.PageFactory;
@@ -61,8 +59,6 @@ public class LoginTest {
         */
         Screenshot screenshot = new AShot().takeScreenshot(driver);
         ImageIO.write(screenshot.getImage(),"png",new File("src/main/screenshot/screenLogin.png"));
-        // File screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-        //FileUtils.copyFile(screenshot, new File("src/main/screenshot/screenLogin.png"));
 
         getBytes("screenLogin.png");
 
@@ -71,6 +67,7 @@ public class LoginTest {
     }
 
     @Test
+    @Description("Тест проверяет работает ли вход на сайт")
     public void uiTestLogin() throws IOException {
         login();
 

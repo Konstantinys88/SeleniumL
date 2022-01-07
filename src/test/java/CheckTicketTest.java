@@ -1,8 +1,6 @@
 import io.qameta.allure.Attachment;
+import io.qameta.allure.Description;
 import io.qameta.allure.Step;
-import org.apache.commons.io.FileUtils;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.PageFactory;
@@ -26,12 +24,9 @@ import java.util.concurrent.TimeUnit;
     * Чтобы сгенерировать отчет - allure serve target/allure-results
     */
 
-public class CheckTicketTest {
+public class CheckTicketTest extends AbstractPage {
 
     private WebDriver driver;
-
-    private final String SUMMARY = "Проблема глобального потепления";
-    private final String DESCRIPTION = "Description of your issue";
 
     /**
      * Метод для прикрепления скриншота к Allure
@@ -62,13 +57,13 @@ public class CheckTicketTest {
         loginPage.clickLogin();
 
         MainPage mainPage = PageFactory.initElements(driver, MainPage.class);
-        mainPage.sendKeySearch(SUMMARY);
+        mainPage.sendKeySearch(getSUMMARY());
         mainPage.clickGo();
         mainPage.goMyTicket();
 
         String textTicket = mainPage.checkTicket();
 
-        if (textTicket.equals(DESCRIPTION)) {
+        if (textTicket.equals(getDESCRIPTION())) {
             System.out.println("Данные соответствуют введенным");
         } else {
             System.out.println("Данные не соответствуют");
@@ -79,9 +74,7 @@ public class CheckTicketTest {
     */
 
         Screenshot screenshot = new AShot().takeScreenshot(driver);
-        ImageIO.write(screenshot.getImage(),"png",new File("src/main/screenshot/screenLogin.png"));
-//        File screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-//        FileUtils.copyFile(screenshot, new File("src/main/screenshot/screeCheckTicket.png"));
+        ImageIO.write(screenshot.getImage(),"png",new File("src/main/screenshot/screeCheckTicket.png"));
 
         getBytes("screeCheckTicket.png");
 
@@ -90,9 +83,9 @@ public class CheckTicketTest {
     }
 
     @Test
+    @Description("Тест проверяет создался ли Ticket")
     public void uiTestCheckTicket() throws IOException {
         checkTicket();
     }
-
 
 }

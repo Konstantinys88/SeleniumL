@@ -1,8 +1,6 @@
 import io.qameta.allure.Attachment;
+import io.qameta.allure.Description;
 import io.qameta.allure.Step;
-import org.apache.commons.io.FileUtils;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.PageFactory;
@@ -27,11 +25,6 @@ import java.util.concurrent.TimeUnit;
     */
 
 public class HelpdeskUITest extends AbstractPage {
-
-    private final String SUMMARY = "Проблема глобального потепления";
-    private final String DESCRIPTION = "Description of your issue";
-    private final String DUE_ON = "2021-10-05 00:00:00";
-    private final String EMAIL = "qwerty@emailo.at";
 
     private WebDriver driver;
 
@@ -60,23 +53,20 @@ public class HelpdeskUITest extends AbstractPage {
         ticketsPage.clickNewTicket();
         ticketsPage.clickQueue();
         ticketsPage.chooseDjangoHelpdesk();
-        ticketsPage.sendKeysSummaryOfTheProblem(SUMMARY);
-        ticketsPage.sendKeysDescriptionOfYourIssue(DESCRIPTION);
+        ticketsPage.sendKeysSummaryOfTheProblem(getSUMMARY());
+        ticketsPage.sendKeysDescriptionOfYourIssue(getDESCRIPTION());
         ticketsPage.clickPriority();
         ticketsPage.clickPriorityCritical();
-        ticketsPage.sendKeyDueOn(DUE_ON);
-        ticketsPage.sendKeyYourEmailAddress(EMAIL);
+        ticketsPage.sendKeyDueOn(getDUE_ON());
+        ticketsPage.sendKeyYourEmailAddress(getEMAIL());
         ticketsPage.clickSubmitTicket();
 
     /**
     * Делает скриншот
     */
 
-
         Screenshot screenshot = new AShot().takeScreenshot(driver);
         ImageIO.write(screenshot.getImage(),"png",new File("src/main/screenshot/screenCreateTicket.png"));
-//      File screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-//      FileUtils.copyFile(screenshot, new File("src/main/screenshot/screenCreateTicket.png"));
 
         getBytes("screenCreateTicket.png");
 
@@ -84,6 +74,7 @@ public class HelpdeskUITest extends AbstractPage {
     }
 
     @Test
+    @Description("Тест проверяет создается ли Ticket")
     public void uiTestCreateTicket() throws IOException {
         createTicketTest();
 
