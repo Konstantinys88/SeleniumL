@@ -11,7 +11,10 @@ import org.testng.annotations.Test;
 import pages.AbstractPage;
 import pages.LoginPage;
 import pages.MainPage;
+import ru.yandex.qatools.ashot.AShot;
+import ru.yandex.qatools.ashot.Screenshot;
 
+import javax.imageio.ImageIO;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -74,8 +77,11 @@ public class CheckTicketTest {
     /**
     * Делает скриншот
     */
-        File screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-        FileUtils.copyFile(screenshot, new File("src/main/screenshot/screeCheckTicket.png"));
+
+        Screenshot screenshot = new AShot().takeScreenshot(driver);
+        ImageIO.write(screenshot.getImage(),"png",new File("src/main/screenshot/screenLogin.png"));
+//        File screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+//        FileUtils.copyFile(screenshot, new File("src/main/screenshot/screeCheckTicket.png"));
 
         getBytes("screeCheckTicket.png");
 
