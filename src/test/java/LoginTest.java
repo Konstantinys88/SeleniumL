@@ -1,4 +1,3 @@
-import io.qameta.allure.Attachment;
 import io.qameta.allure.Description;
 import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
@@ -8,33 +7,17 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import pages.AbstractPage;
 import pages.LoginPage;
-import ru.yandex.qatools.ashot.AShot;
-import ru.yandex.qatools.ashot.Screenshot;
-
-import javax.imageio.ImageIO;
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.concurrent.TimeUnit;
 
-    /**
-    * Чтобы запустить сборку введите - mvn clean test
-    * Чтобы сгенерировать отчет - allure serve target/allure-results
-    */
+/**
+ * Чтобы запустить сборку введите - mvn clean test
+ * Чтобы сгенерировать отчет - allure serve target/allure-results
+ */
 
 public class LoginTest {
 
     private WebDriver driver;
-
-    /**
-     * Метод для прикрепления скриншота к Allure
-     */
-
-    @Attachment
-    public static byte[] getBytes(String resourceName) throws IOException {
-        return Files.readAllBytes(Paths.get("src/main/screenshot", resourceName));
-    }
 
     @BeforeClass
     public void setup() throws IOException {
@@ -55,12 +38,10 @@ public class LoginTest {
         loginPage.clickLogin();
 
         /**
-        * Делает скриншот
-        */
-        Screenshot screenshot = new AShot().takeScreenshot(driver);
-        ImageIO.write(screenshot.getImage(),"png",new File("src/main/screenshot/screenLogin.png"));
+         * Делает скриншот
+         */
 
-        getBytes("screenLogin.png");
+        GetScreenshots.takeScreenshot("screenLogin.png");
 
         driver.close();
 
